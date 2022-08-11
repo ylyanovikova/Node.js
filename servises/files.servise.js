@@ -10,19 +10,30 @@ const filePath = "./dataBase/users.json";
 // fs.appendFile(filePath, JSON.stringify(userObj));
 
 module.exports = {
-    insertUser: async (userObj)=>{
+    insertUser: async (userObj) => {
         // const user = JSON.parse(userObj);
         const data = await fs.readFile(filePath);
         const usersFromDB = JSON.parse(data)
-        const users =  usersFromDB.users;
+        const users = usersFromDB.users;
         users.push(userObj);
         const newUsers = JSON.stringify(users);
         fs.writeFile(filePath, `{"users": ${newUsers}}`);
 
         return userObj;
-    //    await fs.appendFile(filePath, user.toString());
+        //    await fs.appendFile(filePath, user.toString());
     },
-    getUsers: async ()=>{
-        return usersDB;
+    getUsers: async () => {
+        const data = await fs.readFile('./dataBase/users.json');
+        const usersObj = JSON.parse(data);
+        const {users} = usersObj;
+        console.log(users);
+        return users;
+    },
+    getUserById: async(id) =>{
+        const data = await fs.readFile('./dataBase/users.json');
+        const usersObj = await JSON.parse(data);
+        const {users} = await usersObj;
+        const user = await users[id];
+        return user
     }
 }
