@@ -26,7 +26,6 @@ module.exports = {
         const data = await fs.readFile('./dataBase/users.json');
         const usersObj = JSON.parse(data);
         const {users} = usersObj;
-        console.log(users);
         return users;
     },
     getUserById: async(id) =>{
@@ -34,7 +33,6 @@ module.exports = {
         const usersObj = await JSON.parse(data);
         const {users} = await usersObj;
         const user = await users[id];
-        // console.log(user);
         return user
     }
 }
