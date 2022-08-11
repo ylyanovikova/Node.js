@@ -18,25 +18,20 @@ app.get('/users', async (request, response) => {
     response.json(users)
 });
 
-app.get('/users/:userId', (request, response) => {
+app.get('/users/:userId', async (request, response) => {
     const { userId } = request.params;
     if (Number.isNaN(+userId) || +userId < 0) {
         response.status(400).json('Wrong user id');
         return;
     } else {
-
-        // let user = fileService.getUserById(userId);
-        // response.json(user)
-        // console.log(user);
+        let user = await fileService.getUserById(userId).then(data => data);
+        console.log(user);
+        if (!user) {
+            response.status(404).json('User not found');
+        } else {
+            response.json(user)
+        }
     }
-
-    // const user = users[userId];
-    // if (!user) {
-    //     response.status(404).json('User not found');
-    // } else {
-    //     response.json(user)
-    //     return user
-    // }
 });
 
 app.post('/users', (request, response) => {

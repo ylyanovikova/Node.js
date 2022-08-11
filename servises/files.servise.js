@@ -34,6 +34,7 @@ module.exports = {
         const usersObj = await JSON.parse(data);
         const {users} = await usersObj;
         const user = await users[id];
+        // console.log(user);
         return user
     }
 }
