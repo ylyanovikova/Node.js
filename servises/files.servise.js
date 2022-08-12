@@ -1,33 +1,44 @@
 const fs = require('fs/promises');
 
-const usersDB = require('../dataBase/users.json');
+const path = require('path');
 
+const filePath = path.join(process.cwd(), "dataBase", "users.json");
 
-const filePath = "./dataBase/users.json";
+const reader = async () => {
+    try {
+        const buffer = await fs.readFile(filePath);
+        const data = buffer.toString();
+        const users = data ? JSON.parse(data) : [];
+
+        return users.sort((a, b) => a.id - b.id);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+const writer = async (users) => {
+    try {
+        await fs.writeFile(filePath, JSON.stringify(users));
+    } catch (e) {
+        console.log(e);
+    }
+};
 
 module.exports = {
-    insertUser: async (userObj) => {
-        // const user = JSON.parse(userObj);
-        const data = await fs.readFile(filePath);
-        const usersFromDB = JSON.parse(data)
-        const users = usersFromDB.users;
+    getUsers: () => {
+        return reader();
+    },
+    createUser: async (userObj) => {
+        const users = await reader();
+        userObj.id = users.length ? users[users.length - 1].id + 1 : 1;
         users.push(userObj);
-        const newUsers = JSON.stringify(users);
-        fs.writeFile(filePath, `{"users": ${newUsers}}`);
+        await writer(users);
 
         return userObj;
     },
-    getUsers: async () => {
-        const data = await fs.readFile('./dataBase/users.json');
-        const usersObj = JSON.parse(data);
-        const {users} = usersObj;
-        return users;
-    },
-    getUserById: async(id) =>{
-        const data = await fs.readFile('./dataBase/users.json');
-        const usersObj = await JSON.parse(data);
-        const {users} = await usersObj;
-        const user = await users[id];
-        return user
+    getUserById: async (id) => {
+        const users = await reader();
+        return users.find((user) => user.id === id);
     }
+
 }
