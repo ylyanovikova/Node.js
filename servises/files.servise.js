@@ -38,6 +38,7 @@ module.exports = {
     },
     getUserById: async (id) => {
         const users = await reader();
+        
         return users.find((user) => user.id === id);
     },
     deleteUser: async (id) => {

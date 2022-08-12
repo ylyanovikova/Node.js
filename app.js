@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-
 const express = require('express');
 
 const fileService = require('./servises/files.servise');
@@ -40,7 +38,7 @@ app.get('/users/:userId', async (request, response) => {
         response.status(404).json("User not found");
         return;
     } else {
-        response.json(user)
+        response.json(user);
     }
 });
 
@@ -63,6 +61,7 @@ app.delete('/users/:userId', async (request, response) => {
 app.put('/users/:userId', async(request, response)=>{
     const {userId} = request.params;
     const {email, password} = request.body;
+    
     if (Number.isNaN(+userId)) {
         response.status(400).json("Wrong user id");
     }
