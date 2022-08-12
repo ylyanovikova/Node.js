@@ -45,12 +45,6 @@ app.get('/users/:userId', async (request, response) => {
     }
 });
 
-
-
-
-
-
-
 app.listen(5000, () => {
     console.log("Listen 5000");
 })
