@@ -30,17 +30,33 @@ app.post('/users', async (require, response) => {
 });
 
 app.get('/users/:userId', async (request, response) => {
-    const {userId} = request.params;
+    const { userId } = request.params;
 
-    if(Number.isNaN(+userId)){
-        response.status(400).json("Wrong user id")
+    if (Number.isNaN(+userId)) {
+        response.status(400).json("Wrong user id");
     }
     const user = await fileService.getUserById(+userId);
-    if(!user){
+    if (!user) {
         response.status(404).json("User not found");
         return;
-    }else{
+    } else {
         response.json(user)
+    }
+});
+
+app.delete('/users/:userId', async (request, response) => {
+    const { userId } = request.params;
+
+    if (Number.isNaN(+userId)) {
+        response.status(400).json("Wrong user id");
+    }
+
+    const user = await fileService.deleteUser(+userId);
+    if (!user) {
+        response.status(404).json("User not found");
+        return;
+    } else {
+        response.sendStatus(204);
     }
 })
 
