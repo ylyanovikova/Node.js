@@ -1,13 +1,9 @@
-const { appendFile } = require('fs');
 const fs = require('fs/promises');
+
 const usersDB = require('../dataBase/users.json');
 
 
 const filePath = "./dataBase/users.json";
-// const userObj = {email: "rrrr@", password: "jj6jjjjb"};
-
-
-// fs.appendFile(filePath, JSON.stringify(userObj));
 
 module.exports = {
     insertUser: async (userObj) => {
@@ -20,7 +16,6 @@ module.exports = {
         fs.writeFile(filePath, `{"users": ${newUsers}}`);
 
         return userObj;
-        //    await fs.appendFile(filePath, user.toString());
     },
     getUsers: async () => {
         const data = await fs.readFile('./dataBase/users.json');
