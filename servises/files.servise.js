@@ -51,6 +51,16 @@ module.exports = {
 
         await writer(users);
         return user;
-    }
+    },
+    updateUser: async (id, data) => {
+        const users = await reader();
+        const index = users.findIndex((user) => user.id === id);
 
+        if (index < 0) return;
+
+        users[index] = {...users[index], ...data};
+
+        await writer(users);
+        return users[index];
+    }
 }
