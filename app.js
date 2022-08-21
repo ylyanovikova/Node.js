@@ -11,8 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/users', userRouter);
 
+app.use('*', (request, response, next) => {
+    next(new Error('Route is not found'))
+});
 
+app.use(mainErrorHandler);
 
 app.listen(PORT, () => {
     mongoose.connect(MONGO_URL)
