@@ -15,7 +15,7 @@ userRouter.post(
 userRouter.get('/:userId',
     commonMiddleware.checkIsIdValid('userId'),
     userMiddlewre.isUserPresent(),
-    userController.deleteUserById
+    userController.getUserById
 );
 userRouter.put('/:userId',
     commonMiddleware.checkIsIdValid('userId'),

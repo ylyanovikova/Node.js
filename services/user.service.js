@@ -8,7 +8,7 @@ module.exports = {
         return User.findOne(filter);
     },
     getUserById(id) {
-        return User.findById(id);
+        return User.findById(id).select(['+cars']).populate('cars');
     },
     getAllUsers() {
         return User.find();

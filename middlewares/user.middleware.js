@@ -6,13 +6,13 @@ module.exports = {
     checkIsUserBodyValid: async (request, response, next) => {
         try {
             const { name, email, password } = request.body;
-            if (name.length < 2) {
+            if (name.length < 2 || !name.length) {
                 return next(new ApiError('Username musr be more than 1 character', statusCode.BAD_REQUEST));
             }
-            if (email.length < 4 && !email.includes('@')) {
+            if (email.length < 4 && !email.includes('@') || !email.length) {
                 return next(new ApiError('Email must be more than 4 characters', statusCode.BAD_REQUEST));
             }
-            if (password.length < 6) {
+            if (password.length < 6 || !password.length) {
                 return next(new ApiError('Password must be more or equil 6 characters', statusCode.BAD_REQUEST));
             }
             next();
@@ -43,6 +43,7 @@ module.exports = {
             if(!user){
                 return next(new ApiError('User not found', statusCode.NOT_FOUND));
             }
+            request.user = user;
             next();
         }catch(e){
             next(e);

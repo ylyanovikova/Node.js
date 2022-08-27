@@ -5,7 +5,7 @@ const carSchema = new Schema({
     year: { type: Number, required: true },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }
 }, {
     timestamps: true,

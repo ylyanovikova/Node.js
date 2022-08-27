@@ -21,6 +21,7 @@ module.exports = {
     getUserById: async (request, response, next) => {
         try {
             const { user } = request;
+            console.log(user);
             response.json(user);
         } catch (e) {
             next(e)
