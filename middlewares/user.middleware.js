@@ -38,7 +38,7 @@ module.exports = {
         try{
             const {userId} = request[from];
 
-            const user = userService.getUserById(userId);
+            const user = await userService.getUserById(userId);
 
             if(!user){
                 return next(new ApiError('User not found', statusCode.NOT_FOUND));
